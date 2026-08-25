@@ -1,0 +1,280 @@
+@import 'tailwindcss';
+
+/* ---------- Self-hosted variable fonts ---------- */
+@font-face {
+  font-family: 'Fraunces';
+  src:
+    url('/fonts/Fraunces-variable-normal.woff2') format('woff2-variations'),
+    url('/fonts/Fraunces-variable-normal.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src:
+    url('/fonts/Fraunces-variable-italic.woff2') format('woff2-variations'),
+    url('/fonts/Fraunces-variable-italic.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-variable-normal.woff2') format('woff2-variations'),
+    url('/fonts/Inter-variable-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Design tokens ---------- */
+@theme {
+  --color-cream: #ece8e1;
+  --color-cream-deep: #e1dacd;
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #2c2a26;
+  --color-muted: #9c968c;
+  --color-muted-faint: #b7b1a5;
+  --color-line: rgba(26, 26, 26, 0.14);
+  --color-line-soft: rgba(26, 26, 26, 0.08);
+
+  --font-serif: 'Fraunces', ui-serif, Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  body {
+    margin: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  svg {
+    display: block;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 4px;
+  }
+}
+
+/* ---------- Reusable component-level utilities ---------- */
+@utility container-page {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: clamp(24px, 6vw, 72px);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+@utility tag-pill {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+/* Shared vertical rhythm for each <main> section. Border is applied per
+   section in JSX (everywhere except the last section, Contact) rather than
+   baked in here, to sidestep utility-ordering/specificity fights with a
+   would-be `:last-of-type` override. */
+@utility section {
+  position: relative;
+  padding: clamp(96px, 14vh, 160px) 0 clamp(64px, 10vh, 120px);
+}
+
+/* ---------- 3D depth ----------
+   Two halves of one system: `scene-3d` establishes the vanishing point on a
+   *container*, `plane-3d` is the surface inside it that actually rotates.
+   The rotation values come from usePointerTilt, which writes --tilt-x /
+   --tilt-y / --lift onto the scene element and lets them inherit down.
+
+   There is deliberately no CSS transition on `plane-3d`: the hook already
+   eases every frame in JS, and a transition on top would lag behind the
+   cursor and double-smooth the motion into mush. Elements that animate
+   *without* the hook (the reveal below) do get a transition. */
+@utility scene-3d {
+  perspective: var(--scene-perspective, 1200px);
+  perspective-origin: 50% 50%;
+}
+
+@utility plane-3d {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    translate3d(0, 0, var(--lift, 0px));
+  will-change: transform;
+}
+
+/* Child layers of a plane-3d, floated at their own depths so they separate
+   from the surface as it turns — this parallax between layers is what sells
+   the tilt as real depth rather than a skew.
+
+   --layer-z rests at 0 and is raised by a `group-hover:[--layer-z:…]`
+   variant at the call site, never inline. That is not a stylistic choice:
+   perspective scales a raised layer by perspective/(perspective - z), so a
+   layer left permanently at 34px is permanently ~4% too large and its left
+   edge sits several pixels outside the column it is supposed to line up
+   with. Resting flat keeps every static layout pixel-identical to the
+   design, and spends the depth only while the pointer is actually there. */
+@utility layer-3d {
+  transform: translateZ(var(--layer-z, 0px));
+  transition: transform 500ms var(--ease-editorial);
+}
+
+/* Scroll-reveal with depth: content swings up from below the viewer and
+   settles flush. `perspective()` as a transform *function* (rather than the
+   `scene-3d` property) gives each element its own vanishing point, so Reveal
+   stays a single polymorphic tag — no wrapper div, which would be invalid
+   between a <ul> and its <li> children. */
+@utility reveal-3d {
+  transform: perspective(1400px) translate3d(0, var(--reveal-y, 30px), var(--reveal-z, -160px))
+    rotateX(var(--reveal-rot, 10deg));
+  transform-origin: 50% 100%;
+}
+
+@utility reveal-3d-in {
+  --reveal-y: 0px;
+  --reveal-z: 0px;
+  --reveal-rot: 0deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plane-3d {
+    transform: none;
+  }
+  .layer-3d {
+    transform: none;
+  }
+  .reveal-3d {
+    transform: none;
+  }
+}
+
+@utility animate-marquee-left {
+  animation-name: marquee-left;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@utility animate-marquee-right {
+  animation-name: marquee-right;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Each row renders its segment twice back-to-back; translating by exactly
+   -50% of the (two-segment-wide) row shifts it by one segment's width,
+   which loops seamlessly since both segments are identical. */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* The WebGL hero mounts well after first paint, so it has to arrive rather
+   than appear — a canvas popping in at full strength on an already-settled
+   page reads as a glitch. */
+@keyframes scene-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
+}
+
+/* The hero code card's trailing cursor: a plain terminal blink, not a
+   decorative flourish — signals "still running" rather than "finished". */
+@keyframes cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@utility animate-cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cursor-blink {
+    animation: none;
+  }
+}
