@@ -36,6 +36,24 @@ export function Layout() {
         : `${site.wordmark} — ${site.role}`
   }, [location.pathname])
 
+  // The hamburger is hidden from `lg` up, where the links sit inline in the
+  // top bar instead. If the overlay is open when the viewport crosses that
+  // line, its close control disappears with it — and the body scroll lock
+  // stays on. Close it on the way past.
+  useEffect(() => {
+    if (!isOpen) return
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    if (desktop.matches) {
+      close()
+      return
+    }
+    const handleChange = (event: MediaQueryListEvent) => {
+      if (event.matches) close()
+    }
+    desktop.addEventListener('change', handleChange)
+    return () => desktop.removeEventListener('change', handleChange)
+  }, [isOpen, close])
+
   function handleNavigate(path: string) {
     if (path === location.pathname) {
       close()
@@ -51,7 +69,13 @@ export function Layout() {
     <>
       <PaperGrain />
 
-      <TopBar isOpen={isOpen} onToggle={toggle} />
+      <TopBar
+        isOpen={isOpen}
+        onToggle={toggle}
+        navItems={navItems}
+        activePath={location.pathname}
+        onLinkClick={close}
+      />
       <OverlayNav
         isOpen={isOpen}
         navItems={navItems}
