@@ -1,21 +1,20 @@
 name: Deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,18 +33,15 @@ jobs:
         working-directory: app
         run: npm run build
 
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
+      # Root user page (gideondakore.github.io) lives in its own repo, so the
+      # build here has to be pushed cross-repo rather than published via
+      # actions/deploy-pages, which only targets the repo the workflow runs in.
+      - name: Publish to gideondakore.github.io
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: app/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          deploy_key: ${{ secrets.PAGES_DEPLOY_KEY }}
+          external_repository: gideondakore/gideondakore.github.io
+          publish_branch: main
+          publish_dir: app/dist
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

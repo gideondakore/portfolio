@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Benjamin Yankey — DevOps Engineer</title>
+    <title>Gideon Dakore — Full Stack Developer</title>
     <meta
       name="description"
-      content="Benjamin Yankey — DevOps Engineer. CI/CD, cloud infrastructure, infrastructure-as-code, and observability, built for reliability."
+      content="Gideon Dakore — Full Stack Developer. Spring Boot and NestJS services on AWS, with React, Next.js, and Flutter clients in front of them."
     />
     <style>
       /* ==========================================================================
@@ -1134,8 +1134,8 @@
     <header class="topbar">
       <a href="#home" class="wordmark" data-anchor>
         <span class="wordmark-dot" aria-hidden="true"></span>
-        <span class="wordmark-label">BENJAMIN YANKEY</span>
-        <span class="wordmark-short">B·YANKEY</span>
+        <span class="wordmark-label">GIDEON DAKORE</span>
+        <span class="wordmark-short">G·DAKORE</span>
       </a>
       <div class="topbar-right">
         <button
@@ -1166,9 +1166,9 @@
       <div class="overlay-footer">
         <div class="overlay-divider" aria-hidden="true"></div>
         <a
-          href="mailto:benjamin.yankey@example.com"
+          href="mailto:dakoregideon72@gmail.com"
           class="overlay-icon"
-          aria-label="Email Benjamin"
+          aria-label="Email Gideon"
         >
           <svg
             viewBox="0 0 24 24"
@@ -1186,19 +1186,21 @@
     <main id="main">
       <section id="home" class="section hero">
         <div class="section-inner">
-          <h1 class="hero-name reveal">Benjamin<br />Y<em>ankey</em></h1>
+          <h1 class="hero-name reveal">Gideon<br />D<em>akore</em></h1>
           <p class="hero-role reveal">
-            DevOps Engineer <span>/</span> Platform &amp; Reliability
+            Full Stack Developer <span>/</span> Java &amp; NestJS
           </p>
           <p class="hero-tagline reveal">
-            Automating infrastructure. Shipping reliably.
+            Java and NestJS services on AWS, and the web and mobile clients in
+            front of them.
           </p>
           <p class="hero-bio reveal">
-            I build CI/CD pipelines and cloud infrastructure that hold up under
-            pressure — provisioning AWS and Azure environments as code, and
-            instrumenting them with observability so failures are caught long
-            before they become incidents. My focus is reliability and developer
-            experience in equal measure.
+            I build across the stack: Spring Boot and NestJS services deployed
+            on AWS, and the React, Next.js, and Flutter clients that talk to
+            them. Recent work includes an identity provider that four
+            applications authenticate against through one OIDC-style flow, and
+            a real-time messaging service that stays correct when mobile
+            connections drop and retry.
           </p>
         </div>
         <div class="hero-scroll" aria-hidden="true">
@@ -1223,16 +1225,18 @@
               >
                 <span class="project-title-wrap">
                   <span class="project-title"
-                    >Zero-Downtime Deployment Pipeline</span
+                    >Identity Provider for a Multi-Domain Platform</span
                   >
                   <span class="project-line"
-                    >Cut deployment time and eliminated release-window downtime
-                    across production services.</span
+                    >A management console that four separate applications
+                    authenticate against, instead of each keeping its own
+                    logins.</span
                   >
                 </span>
                 <span class="project-tags">
-                  <span class="tag">Jenkins</span><span class="tag">ArgoCD</span
-                  ><span class="tag">Kubernetes</span>
+                  <span class="tag">Spring Boot</span><span class="tag">OIDC</span
+                  ><span class="tag">JWKS</span><span class="tag">JPA</span
+                  ><span class="tag">AWS</span>
                 </span>
                 <span class="project-toggle" aria-hidden="true"
                   ><i></i><i></i
@@ -1245,32 +1249,43 @@
                       <div class="project-detail-block">
                         <h4>Problem</h4>
                         <p>
-                          Manual releases required scheduled maintenance
-                          windows. Rollbacks were slow and often manual, and
-                          every deploy risked customer-facing downtime.
+                          A multi-domain supply chain platform for a client was
+                          split across five Spring Boot services — a
+                          management console plus four domain applications
+                          (inventory, production, procurement, sales) — each of
+                          which would otherwise need to maintain its own user
+                          accounts and login flow.
                         </p>
                       </div>
                       <div class="project-detail-block">
                         <h4>Solution</h4>
                         <p>
-                          Built a Jenkins pipeline feeding GitOps-based
-                          progressive rollouts through ArgoCD onto Kubernetes,
-                          with automated canary analysis and instant, one-click
-                          rollback.
+                          Built the management console as the platform's
+                          identity provider and single source of truth for
+                          user accounts, so IT administrators onboard employees
+                          in one place. Each domain application authenticates
+                          against it through an OIDC-style flow instead of
+                          maintaining separate credentials.
                         </p>
                       </div>
                       <div class="project-detail-block">
                         <h4>Outcome</h4>
                         <p>
-                          Deploys now ship continuously during business hours
-                          with no visible impact to end users, across every
-                          production service.
+                          Designed and built the console; also shipped features
+                          across the inventory and sales domains, including
+                          filterable list endpoints via JPA Specifications and
+                          an event-driven notification system that only fires
+                          after the originating transaction commits. Deployed
+                          on AWS (EC2, ALB, Auto Scaling Groups) via a Jenkins
+                          pipeline gated by SonarQube.
                         </p>
                       </div>
                     </div>
                     <p class="project-metric">
-                      <span>92%</span> reduction in deployment time — zero
-                      customer-facing downtime across 200+ releases
+                      Tokens are signed with a <span>private key</span>; the
+                      public key is published at a standard JWKS endpoint, so
+                      each application verifies tokens locally — no shared
+                      secrets, no callback on every request.
                     </p>
                   </div>
                 </div>
@@ -1285,16 +1300,17 @@
               >
                 <span class="project-title-wrap">
                   <span class="project-title"
-                    >Multi-Cloud Infrastructure-as-Code Framework</span
+                    >Real-Time Messaging Service</span
                   >
                   <span class="project-line"
-                    >Standardized provisioning across two cloud providers with a
-                    shared module library.</span
+                    >Messaging infrastructure for a travel platform, built to
+                    stay correct across retries and unstable mobile
+                    connections.</span
                   >
                 </span>
                 <span class="project-tags">
-                  <span class="tag">Terraform</span><span class="tag">AWS</span
-                  ><span class="tag">Azure</span>
+                  <span class="tag">NestJS</span><span class="tag">Socket.io</span
+                  ><span class="tag">Redis</span><span class="tag">Prisma</span>
                 </span>
                 <span class="project-toggle" aria-hidden="true"
                   ><i></i><i></i
@@ -1307,32 +1323,36 @@
                       <div class="project-detail-block">
                         <h4>Problem</h4>
                         <p>
-                          Infrastructure was provisioned ad hoc across AWS and
-                          Azure, leading to configuration drift, inconsistent
-                          environments, and slow onboarding for new services.
+                          Traveller–agency conversations on a travel platform
+                          needed real-time delivery that stayed reliable across
+                          multiple service instances and flaky mobile
+                          connections, plus a way to track how quickly agencies
+                          were responding.
                         </p>
                       </div>
                       <div class="project-detail-block">
                         <h4>Solution</h4>
                         <p>
-                          Designed a reusable Terraform module library covering
-                          networking, compute, and IAM, enforced through
-                          CI-driven plan validation and policy checks.
+                          Built the messaging service in NestJS using Socket.io
+                          with the Redis adapter, so socket state is shared
+                          across instances and the service scales horizontally.
+                          Designed the messaging schema in Prisma with
+                          per-participant read state, and added SLA timers for
+                          response-time tracking.
                         </p>
                       </div>
                       <div class="project-detail-block">
                         <h4>Outcome</h4>
                         <p>
-                          New environments are now provisioned from a single,
-                          auditable source of truth instead of manual console
-                          work.
+                          Built and own the messaging service end-to-end as a
+                          backend developer on the platform.
                         </p>
                       </div>
                     </div>
                     <p class="project-metric">
-                      Provisioning time cut from <span>~2 weeks</span> to
-                      <span>2 days</span> — drift eliminated across 30+
-                      environments
+                      Client-supplied message identifiers make delivery
+                      <span>idempotent</span> — a message retried after a
+                      dropped connection never gets created twice.
                     </p>
                   </div>
                 </div>
@@ -1347,16 +1367,17 @@
               >
                 <span class="project-title-wrap">
                   <span class="project-title"
-                    >Observability Stack Overhaul</span
+                    >Identity-Aware VPN for Remote Access</span
                   >
                   <span class="project-line"
-                    >Rebuilt monitoring end to end to cut mean-time-to-detect on
-                    live incidents.</span
+                    >A proposed architecture and mobile client for secure
+                    company remote access.</span
                   >
                 </span>
                 <span class="project-tags">
-                  <span class="tag">Prometheus</span
-                  ><span class="tag">Grafana</span><span class="tag">Loki</span>
+                  <span class="tag">OpenVPN</span
+                  ><span class="tag">PKI</span><span class="tag">Flutter</span
+                  ><span class="tag">iptables</span>
                 </span>
                 <span class="project-toggle" aria-hidden="true"
                   ><i></i><i></i
@@ -1369,93 +1390,34 @@
                       <div class="project-detail-block">
                         <h4>Problem</h4>
                         <p>
-                          Incidents were most often first detected by customer
-                          reports rather than internal alerting, with logs
-                          scattered across services and no shared source of
-                          truth.
+                          A company's distributed workforce needed secure
+                          remote access to internal systems, without an
+                          existing VPN service to build on.
                         </p>
                       </div>
                       <div class="project-detail-block">
                         <h4>Solution</h4>
                         <p>
-                          Deployed a unified stack — Prometheus for metrics,
-                          Loki for logs, Grafana for dashboards — with SLO-based
-                          alert thresholds tuned to cut noise.
+                          Designed an identity-aware VPN architecture: OpenVPN
+                          running on EC2, an easy-rsa PKI for per-client
+                          certificates, per-client configuration directives,
+                          and iptables-based routing. Documented as a
+                          proof-of-concept proposal and built the VPN
+                          integration component in Flutter — connection
+                          lifecycle and on-device client configuration.
                         </p>
                       </div>
                       <div class="project-detail-block">
                         <h4>Outcome</h4>
                         <p>
-                          On-call now sees actionable alerts tied to real user
-                          impact, with correlated logs and metrics in one place.
+                          Designed the architecture end-to-end and built the
+                          mobile client component.
                         </p>
                       </div>
                     </div>
                     <p class="project-metric">
-                      Mean-time-to-detect cut by <span>74%</span> — from ~32
-                      minutes to under 8 minutes
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="project" data-open="false">
-              <button
-                class="project-summary"
-                aria-expanded="false"
-                aria-controls="proj-4"
-              >
-                <span class="project-title-wrap">
-                  <span class="project-title"
-                    >Self-Healing Kubernetes Cluster</span
-                  >
-                  <span class="project-line"
-                    >Automated recovery from common node and pod failures
-                    without human intervention.</span
-                  >
-                </span>
-                <span class="project-tags">
-                  <span class="tag">Kubernetes</span
-                  ><span class="tag">Helm</span><span class="tag">ArgoCD</span>
-                </span>
-                <span class="project-toggle" aria-hidden="true"
-                  ><i></i><i></i
-                ></span>
-              </button>
-              <div class="project-body-wrap">
-                <div class="project-body" id="proj-4">
-                  <div class="project-body-inner">
-                    <div class="project-detail">
-                      <div class="project-detail-block">
-                        <h4>Problem</h4>
-                        <p>
-                          Node and pod failures required manual on-call
-                          intervention, generating repeated after-hours pages
-                          for well-understood, recoverable failure modes.
-                        </p>
-                      </div>
-                      <div class="project-detail-block">
-                        <h4>Solution</h4>
-                        <p>
-                          Implemented layered health checks, pod disruption
-                          budgets, and ArgoCD-managed recovery manifests,
-                          templated through Helm for consistency across
-                          clusters.
-                        </p>
-                      </div>
-                      <div class="project-detail-block">
-                        <h4>Outcome</h4>
-                        <p>
-                          Common failure classes now resolve themselves within
-                          minutes, with no page sent unless recovery genuinely
-                          requires a human.
-                        </p>
-                      </div>
-                    </div>
-                    <p class="project-metric">
-                      Automated recovery from <span>95%</span> of common
-                      failures — after-hours pages down <span>60%</span>
+                      Reviewed and tested by engineering leadership, but still
+                      a <span>proposal</span> — not adopted org-wide.
                     </p>
                   </div>
                 </div>
@@ -1474,53 +1436,71 @@
 
           <div class="skills-grid reveal">
             <div class="skill-group">
-              <p class="skill-group-label">Cloud</p>
+              <p class="skill-group-label">Languages</p>
+              <ul class="skill-items">
+                <li>Java</li>
+                <li>TypeScript</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>SQL</li>
+                <li>Bash</li>
+                <li>C++</li>
+              </ul>
+            </div>
+            <div class="skill-group">
+              <p class="skill-group-label">Backend</p>
+              <ul class="skill-items">
+                <li>Spring Boot</li>
+                <li>NestJS</li>
+                <li>Node.js</li>
+                <li>Express</li>
+                <li>JPA / Hibernate</li>
+                <li>Prisma</li>
+                <li>MapStruct</li>
+                <li>JUnit</li>
+                <li>REST APIs</li>
+              </ul>
+            </div>
+            <div class="skill-group">
+              <p class="skill-group-label">Frontend &amp; Mobile</p>
+              <ul class="skill-items">
+                <li>React</li>
+                <li>Next.js</li>
+                <li>React Native</li>
+                <li>Flutter</li>
+                <li>HTML/CSS</li>
+              </ul>
+            </div>
+            <div class="skill-group">
+              <p class="skill-group-label">Cloud &amp; DevOps</p>
               <ul class="skill-items">
                 <li>AWS</li>
-                <li>Azure</li>
-                <li>GCP</li>
-              </ul>
-            </div>
-            <div class="skill-group">
-              <p class="skill-group-label">Containers &amp; Orchestration</p>
-              <ul class="skill-items">
                 <li>Docker</li>
-                <li>Kubernetes</li>
-                <li>Helm</li>
-              </ul>
-            </div>
-            <div class="skill-group">
-              <p class="skill-group-label">IaC &amp; Config Management</p>
-              <ul class="skill-items">
-                <li>Terraform</li>
-                <li>Ansible</li>
-                <li>Pulumi</li>
-              </ul>
-            </div>
-            <div class="skill-group">
-              <p class="skill-group-label">CI / CD</p>
-              <ul class="skill-items">
                 <li>Jenkins</li>
+                <li>SonarQube</li>
                 <li>GitHub Actions</li>
-                <li>GitLab CI</li>
-                <li>ArgoCD</li>
+                <li>Linux</li>
+                <li>Tomcat</li>
               </ul>
             </div>
             <div class="skill-group">
-              <p class="skill-group-label">Observability</p>
+              <p class="skill-group-label">Data &amp; Messaging</p>
               <ul class="skill-items">
-                <li>Prometheus</li>
-                <li>Grafana</li>
-                <li>Loki / ELK</li>
-                <li>Datadog</li>
+                <li>PostgreSQL</li>
+                <li>MySQL</li>
+                <li>MongoDB</li>
+                <li>Redis</li>
+                <li>Socket.io</li>
               </ul>
             </div>
             <div class="skill-group">
-              <p class="skill-group-label">Scripting &amp; Languages</p>
+              <p class="skill-group-label">Practices</p>
               <ul class="skill-items">
-                <li>Bash</li>
-                <li>Python</li>
-                <li>Go</li>
+                <li>Domain-driven design</li>
+                <li>Hexagonal architecture</li>
+                <li>Event-driven systems</li>
+                <li>CI/CD</li>
+                <li>PKI/TLS</li>
               </ul>
             </div>
           </div>
@@ -1532,21 +1512,24 @@
             <div class="cert-list">
               <div class="cert-item">
                 <p class="cert-title">
-                  AWS Certified DevOps Engineer – Professional
+                  AWS Certified Cloud Practitioner
                 </p>
-                <p class="cert-meta">Amazon Web Services · 2025</p>
+                <p class="cert-meta">Amazon Web Services</p>
               </div>
               <div class="cert-item">
                 <p class="cert-title">
-                  Certified Kubernetes Administrator (CKA)
+                  AWS Certified Developer – Associate
                 </p>
-                <p class="cert-meta">The Linux Foundation / CNCF · 2024</p>
+                <p class="cert-meta">Amazon Web Services · In progress</p>
               </div>
               <div class="cert-item">
                 <p class="cert-title">
-                  HashiCorp Certified: Terraform Associate
+                  Cisco Network Technician Career Path
                 </p>
-                <p class="cert-meta">HashiCorp · 2023</p>
+                <p class="cert-meta">
+                  Networking Basics · Networking Devices and Initial
+                  Configuration · Linux Essentials
+                </p>
               </div>
             </div>
           </div>
@@ -1562,61 +1545,110 @@
 
           <div class="timeline reveal">
             <article class="role">
-              <div class="role-dates">2024 — Present</div>
+              <div class="role-dates">Jun 2026 — Present</div>
               <div>
-                <h3 class="role-title">Site Reliability Engineer</h3>
-                <p class="role-company">Company A</p>
+                <h3 class="role-title">Backend Developer (Part-time, Remote)</h3>
+                <p class="role-company">Trekmara</p>
                 <ul class="role-bullets">
                   <li>
-                    Own the observability stack and on-call rotation for a fleet
-                    of 40+ production services.
+                    Built the real-time messaging service in NestJS using
+                    Socket.io with the Redis adapter, so socket state is shared
+                    across instances and the service scales horizontally.
                   </li>
                   <li>
-                    Lead migration to progressive delivery, cutting
-                    change-failure rate by half.
+                    Designed the messaging schema in Prisma, with
+                    per-participant read state and client-supplied message
+                    identifiers that make delivery idempotent under retries and
+                    unstable mobile connections.
                   </li>
                   <li>
-                    Partner with product engineering to bake SLOs into the
-                    definition of done.
+                    Added SLA timers for response-time tracking on
+                    traveller–agency conversations.
                   </li>
                 </ul>
               </div>
             </article>
 
             <article class="role">
-              <div class="role-dates">2021 — 2023</div>
+              <div class="role-dates">Nov 2025 — Present</div>
               <div>
-                <h3 class="role-title">DevOps Engineer</h3>
-                <p class="role-company">Company B</p>
+                <h3 class="role-title">Backend Engineer</h3>
+                <p class="role-company">AmaliTech Ghana Ltd</p>
                 <ul class="role-bullets">
                   <li>
-                    Built the organization's first shared Terraform module
-                    library across AWS and Azure.
+                    Built the management console for a multi-domain supply
+                    chain platform — the identity provider and single source of
+                    truth for user accounts across five Spring Boot services,
+                    so four separate domain applications authenticate through
+                    one OIDC-style flow instead of maintaining their own
+                    logins.
                   </li>
                   <li>
-                    Designed and rolled out CI/CD pipelines for six engineering
-                    teams.
+                    Tokens signed with a private key; the corresponding public
+                    key published at a standard JWKS endpoint, so each
+                    application verifies tokens locally without shared secrets
+                    or a callback on every request.
                   </li>
                   <li>
-                    Reduced infrastructure provisioning time from weeks to days.
+                    Built dynamic, filterable list endpoints across the
+                    inventory and sales domains using JPA Specifications with
+                    subquery-based filtering, with DTO mapping via MapStruct.
+                  </li>
+                  <li>
+                    Built an event-driven notification system that dispatches
+                    only after the originating transaction commits, so
+                    rolled-back operations never emit notifications.
+                  </li>
+                  <li>
+                    Built OTP generation and a cross-application invitation
+                    flow using server-to-server token verification.
+                  </li>
+                  <li>
+                    Designed an identity-aware VPN architecture for company
+                    remote access (OpenVPN on EC2, easy-rsa PKI, per-client
+                    configuration, iptables-based routing) and built its
+                    Flutter client component — documented as a
+                    proof-of-concept and reviewed by engineering leadership;
+                    still a proposal, not adopted org-wide.
+                  </li>
+                  <li>
+                    Deployed services on AWS across EC2, an Application Load
+                    Balancer, and Auto Scaling Groups via a Jenkins pipeline
+                    gated by SonarQube.
                   </li>
                 </ul>
               </div>
             </article>
 
             <article class="role">
-              <div class="role-dates">Jan — May 2021</div>
+              <div class="role-dates">Sep 2024 — Nov 2025</div>
               <div>
-                <h3 class="role-title">Infrastructure Engineer (Intern)</h3>
-                <p class="role-company">Company C</p>
+                <h3 class="role-title">Software Engineering Intern</h3>
+                <p class="role-company">AmaliTech Ghana Ltd</p>
                 <ul class="role-bullets">
                   <li>
-                    Automated recurring manual server maintenance with Bash and
-                    Python scripts.
+                    National Service Personnel backend engineering programme
+                    covering Java, Spring Boot, JPA, testing, application
+                    security, and cloud fundamentals.
                   </li>
                   <li>
-                    Supported migration of internal tooling from bare-metal to
-                    containers.
+                    Built weekly lab systems progressing from console
+                    applications to secured, database-backed services.
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="role">
+              <div class="role-dates">Dec 2023 — Nov 2025</div>
+              <div>
+                <h3 class="role-title">Web Developer (Freelance)</h3>
+                <p class="role-company">Self-employed</p>
+                <ul class="role-bullets">
+                  <li>
+                    Built custom web applications for clients in TypeScript,
+                    React, and Next.js — interface work and backend
+                    integration.
                   </li>
                 </ul>
               </div>
@@ -1633,45 +1665,7 @@
           </div>
 
           <div class="journal-list reveal">
-            <div class="journal-item">
-              <span class="journal-date">Mar 2026</span>
-              <div>
-                <h3 class="journal-title">
-                  Why We Moved from Jenkins to ArgoCD
-                </h3>
-                <p class="journal-excerpt">
-                  On the tradeoffs of push- vs. pull-based delivery, and what
-                  actually changed on-call load.
-                </p>
-              </div>
-              <span class="journal-arrow" aria-hidden="true">→</span>
-            </div>
-            <div class="journal-item">
-              <span class="journal-date">Jan 2026</span>
-              <div>
-                <h3 class="journal-title">
-                  Notes on Kubernetes Cost Optimization
-                </h3>
-                <p class="journal-excerpt">
-                  Right-sizing requests, spot capacity, and the bin-packing
-                  habits that quietly save the most.
-                </p>
-              </div>
-              <span class="journal-arrow" aria-hidden="true">→</span>
-            </div>
-            <div class="journal-item">
-              <span class="journal-date">Nov 2025</span>
-              <div>
-                <h3 class="journal-title">
-                  Designing Alerting That Doesn't Cry Wolf
-                </h3>
-                <p class="journal-excerpt">
-                  A practical approach to SLO-based paging that on-call
-                  engineers actually trust.
-                </p>
-              </div>
-              <span class="journal-arrow" aria-hidden="true">→</span>
-            </div>
+            <p class="journal-excerpt">No entries yet.</p>
           </div>
         </div>
       </section>
@@ -1683,18 +1677,18 @@
             Let's build <em>reliable</em> infrastructure together.
           </h2>
           <p class="contact-lede reveal">
-            Open to platform engineering, SRE, and DevOps roles — and always
-            glad to talk shop about pipelines, observability, or
-            infrastructure-as-code.
+            Open to full stack and backend engineering roles — reach out about
+            identity systems, messaging infrastructure, or Spring Boot / NestJS
+            work.
           </p>
           <a
-            href="mailto:benjamin.yankey@example.com"
+            href="mailto:dakoregideon72@gmail.com"
             class="contact-email reveal"
-            >benjamin.yankey@example.com</a
+            >dakoregideon72@gmail.com</a
           >
 
           <div class="contact-links reveal">
-            <a href="#" class="contact-link">
+            <a href="https://github.com/gideondakore" class="contact-link">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -1707,7 +1701,7 @@
               </svg>
               GitHub
             </a>
-            <a href="#" class="contact-link">
+            <a href="https://www.linkedin.com/in/gideon-dakore" class="contact-link">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -1722,29 +1716,15 @@
               LinkedIn
             </a>
           </div>
-
-          <a href="#" class="contact-resume reveal">
-            Download Résumé
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              width="14"
-              height="14"
-            >
-              <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 19h16" />
-            </svg>
-          </a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <span class="footer-copy">© 2026 Benjamin Yankey</span>
+        <span class="footer-copy">© 2026 Gideon Dakore</span>
         <div class="footer-icons">
-          <a href="#" aria-label="GitHub">
+          <a href="https://github.com/gideondakore" aria-label="GitHub">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -1756,7 +1736,7 @@
               />
             </svg>
           </a>
-          <a href="#" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/gideon-dakore" aria-label="LinkedIn">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -1769,7 +1749,7 @@
               />
             </svg>
           </a>
-          <a href="mailto:benjamin.yankey@example.com" aria-label="Email">
+          <a href="mailto:dakoregideon72@gmail.com" aria-label="Email">
             <svg
               viewBox="0 0 24 24"
               fill="none"
